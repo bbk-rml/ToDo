@@ -1,4 +1,4 @@
-import {styleSheet, Text, View, TextInput, Pressable} from 'react-native'
+import {StyleSheet, Text, View, TextInput, Pressable} from 'react-native'
 
 export function Signup( props ){
     return(
@@ -10,7 +10,7 @@ export function Signup( props ){
              <Text>Password</Text>
              <TextInput style ={styles.input} placeholder='minimum 8 character'/>
              <Pressable style ={styles.button} >
-                <Text>
+                <Text style={styles.button.text}>
                     Sign Up
                 </Text>
              </Pressable>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         padding: 5,
         text:{
             color:'#eeeeee',
-            textAlign:'center'
+            textAlign:'center',
         }
     },
 })
