@@ -19,7 +19,7 @@ export function Signup( props ){
     )
 }
 
-const styles = styleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',

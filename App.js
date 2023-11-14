@@ -5,13 +5,23 @@ import { StyleSheet, Text, View } from 'react-native';
 import { firebaseConfig } from './config/Config';
 import { initializeApp } from 'firebase/app'
 
+//react navigation
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+//Screens
+import { Signup } from './screens/Signup';
+const Stack = createNativeStackNavigator()
+
+
 export default function App() {
   const FBapp = initializeApp (firebaseConfig)
   return (
-    <View style={styles.container}>
-      <Text>Hello World</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name= "Sign up" component={Signup} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
