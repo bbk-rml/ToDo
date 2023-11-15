@@ -5,4 +5,4 @@ export const firebaseConfig = {
     storageBucket: "todo-52760.appspot.com",
     messagingSenderId: "121307194844",
     appId: "1:121307194844:web:674d12e87fe65b27661b19"
-  };
+  }

@@ -1,13 +1,10 @@
 import {StyleSheet, Text, View, TextInput, Pressable} from 'react-native'
 import { useState, useEffect, useContext} from 'react'
 import { AuthContext } from '../contexts/AuthContext'
-import {useNavigation} from '@react-navigation/native'
 
-export function Signup ( props ){
+export function Signin ( props ){
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-
-    const navigation = useNavigation()
 
     const auth = useContext (AuthContext)
 
@@ -27,7 +24,7 @@ export function Signup ( props ){
     return(
         <View style={styles.container}>
             <View style ={ styles.form }>
-             <Text style={styles.title}> Register form</Text>
+             <Text style={styles.title}> Sign in to your Account</Text>
              <Text>Email</Text>
              <TextInput 
                 style ={styles.input} 
@@ -44,15 +41,7 @@ export function Signup ( props ){
                 onChangeText={(val) => setPassword(val)} 
               />
              <Pressable style ={styles.button} onPress={ () => submitHandler()} >
-                <Text style={styles.button.text}>
-                    Sign up
-                </Text>
-             </Pressable>
-
-             <Pressable onPress={() => navigation.navigate("Sign in")}> 
-                <Text>
-                    Go to Signin
-                </Text>
+                <Text style={styles.button.text}>Sign in</Text>
              </Pressable>
             </View>
         </View>

@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 import {useState} from 'react'
 
+
 //contexts
 
 import { AuthContext } from './contexts/AuthContext'
@@ -13,14 +14,16 @@ import {
   getAuth, 
   createUserWithEmailAndPassword, 
   onAuthStateChanged
-} from 'firebase/auth'
+} from "firebase/auth"
 
 //react navigation
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 //Screens
-import { Signup } from './screens/Signup';
+import { Signup } from './screens/Signup'
+import { Signin } from './screens/Signin'
+
 const Stack = createNativeStackNavigator()
 
 
@@ -40,25 +43,32 @@ export default function App() {
     }
     else{
       //user is not authenticated
-      setAuth(null)
-
+      setAuth( null )
     }
   })
 
-  const Register=(email, Password) => {
+  const Register=(email, password) => {
      return new Promise( ( resolve, reject ) => {
-      createUserWithEmailAndPassword(FBauth, email, Password)
+      createUserWithEmailAndPassword(FBauth, email, password)
       .then( (response ) => resolve(response))
       .catch( (err) => reject(err))
      } )
   }
+
+  const Login =() =>{}
   return (
     <AuthContext.Provider value = {auth} >
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name= "Sign up">
-          { ( props ) => <Signup handeler ={ Register }/> }
-          </Stack.Screen> 
+          { ( props ) => < Signup handeler ={ Register }/> }
+        </Stack.Screen>
+
+
+        <Stack.Screen name= "Sign in">
+          { ( props ) => < Signin handeler ={ Login}/> }
+          </Stack.Screen>
+
       </Stack.Navigator>
     </NavigationContainer>
     </AuthContext.Provider>
