@@ -1,12 +1,41 @@
 import {StyleSheet, Text, View, TextInput, Pressable} from 'react-native'
 import { useState, useEffect, useContext} from 'react'
 import { AuthContext } from '../contexts/AuthContext'
+import {useNavigation} from '@react-navigation/native'
+
 
 export function Signin ( props ){
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    const auth = useContext (AuthContext)
+    const [validEmail, setvalidEmail] = useState( false )
+    const [validPassword, setvalidPassword] = useState(false)
+
+    const auth = useContext (AuthContext) 
+    const navigation = useNavigation()
+
+    useEffect ( () => { 
+        if (email.indexOf('@') > 0){
+            setvalidEmail (true)
+
+        }
+        else{
+            setvalidEmail(false)
+        }
+    }, 
+    [email] )
+
+
+    useEffect ( () => { 
+        if (password.length >= 8){
+            setvalidPassword (true)
+
+        }
+        else{
+            setvalidPassword(false)
+        }
+    }, 
+    [password] )
 
     // useEffect ( () => { console.log(email)}, [email] )
 
@@ -40,8 +69,20 @@ export function Signin ( props ){
                 value={password}
                 onChangeText={(val) => setPassword(val)} 
               />
-             <Pressable style ={styles.button} onPress={ () => submitHandler()} >
+             <Pressable
+
+             style ={(validEmail && validPassword) ? styles.button : styles.disabledbutton}  
+             onPress={ () => submitHandler()}
+             disabled={ ( validEmail && validPassword) ? false: true }
+
+             >
                 <Text style={styles.button.text}>Sign in</Text>
+             </Pressable>
+
+             <Pressable style={styles.authlink} onPress={() => navigation.navigate("Sign up")}> 
+                <Text styles ={styles.authlink.text}>
+                    Don't have an account? Sign up
+                </Text>
              </Pressable>
             </View>
         </View>
@@ -75,6 +116,21 @@ const styles = StyleSheet.create({
     },
     button:{
         backgroundColor: '#333333',
+        padding: 5,
+        text:{
+            color:'#eeeeee',
+            textAlign:'center',
+        }
+    },
+    authlink:{
+        marginTop: 13,
+        text: {
+            textAlign: "center"
+        }
+
+    },
+    disabledbutton:{
+        backgroundColor: '#666666',
         padding: 5,
         text:{
             color:'#eeeeee',
