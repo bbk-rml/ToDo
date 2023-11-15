@@ -39,8 +39,8 @@ export function Signup ( props ){
     }, 
     [password] ) 
 
-     const submitHandler = () => {   
-        props.handler(email, password) 
+     const submitHandler = ( ) => {   
+        props.handler( email, password) 
         .then( (user) => {
             console.log('Signup Successful')
         })
@@ -80,8 +80,8 @@ export function Signup ( props ){
                 </Text>
              </Pressable>
 
-             <Pressable onPress={() => navigation.navigate("Sign in")}> 
-                <Text>
+             <Pressable style={styles.authlink} onPress={() => navigation.navigate("Sign in")}> 
+                <Text style={styles.authlink.text}>
                     Go to Signin
                 </Text>
              </Pressable>
@@ -131,4 +131,11 @@ const styles = StyleSheet.create({
             textAlign:'center',
         }
     },
+
+    authlink:{
+        marginTop: 13,
+        text: {
+            textAlign: "center"
+        } 
+    },   
 })

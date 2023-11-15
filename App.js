@@ -13,8 +13,9 @@ import { initializeApp } from 'firebase/app'
 import { 
   getAuth, 
   createUserWithEmailAndPassword, 
-  onAuthStateChanged
-} from "firebase/auth"
+  onAuthStateChanged,
+  signInWithEmailAndPassword
+       } from "firebase/auth"
 
 //react navigation
 import { NavigationContainer } from '@react-navigation/native'
@@ -55,7 +56,15 @@ export default function App() {
      } )
   }
 
-  const Login =() =>{}
+  const Login =(email, password) =>{
+    return new Promise ( ( resolve,reject )=> { 
+      signInWithEmailAndPassword(FBauth, email,password)
+      .then((response) => resolve(response))
+      .catch((err) => reject(err))
+
+    })
+  }
+
   return (
     <AuthContext.Provider value = {auth} >
     <NavigationContainer>
