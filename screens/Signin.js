@@ -42,7 +42,7 @@ export function Signin ( props ){
      const submitHandler = () => {   
         props.handler(email, password) 
         .then( (user) => {
-            console.log('Signup Successful')
+            console.log(user)
         })
         .catch((error) => {
             console.log( error )
