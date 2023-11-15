@@ -4,14 +4,40 @@ import { AuthContext } from '../contexts/AuthContext'
 import {useNavigation} from '@react-navigation/native'
 
 export function Signup ( props ){
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const [validEmail, setvalidEmail] = useState(false)
+    const [validPassword, setvalidPassword] = useState(false)
 
     const navigation = useNavigation()
 
     const auth = useContext (AuthContext)
 
-    // useEffect ( () => { console.log(email)}, [email] )
+    //check the value of email
+
+    useEffect ( () => { 
+        if (email.indexOf('@') > 0){
+            setvalidEmail (true)
+
+        }
+        else{
+            setvalidEmail(false)
+        }
+    }, 
+    [email] )
+
+    //check value of password
+    useEffect ( () => { 
+        if (password.length>= 8){
+            setvalidPassword (true)
+
+        }
+        else{
+            setvalidPassword(false)
+        }
+    }, 
+    [password] ) 
 
      const submitHandler = () => {   
         props.handler(email, password) 
@@ -43,7 +69,12 @@ export function Signup ( props ){
                 value={password}
                 onChangeText={(val) => setPassword(val)} 
               />
-             <Pressable style ={styles.button} onPress={ () => submitHandler()} >
+             <Pressable 
+              style ={(validEmail && validPassword) ? styles.button : styles.disabledbutton} 
+              onPress={ () => submitHandler()} 
+              disabled={ ( validEmail && validPassword) ? false: true }
+              >
+
                 <Text style={styles.button.text}>
                     Sign up
                 </Text>
@@ -86,6 +117,14 @@ const styles = StyleSheet.create({
     },
     button:{
         backgroundColor: '#333333',
+        padding: 5,
+        text:{
+            color:'#eeeeee',
+            textAlign:'center',
+        }
+    },
+    disabledbutton:{
+        backgroundColor: '#666666',
         padding: 5,
         text:{
             color:'#eeeeee',
