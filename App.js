@@ -24,6 +24,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 //Screens
 import { Signup } from './screens/Signup'
 import { Signin } from './screens/Signin'
+import { Home } from './screens/Home'
 
 const Stack = createNativeStackNavigator()
 
@@ -76,6 +77,10 @@ export default function App() {
 
         <Stack.Screen name= "Sign in">
           { ( props ) => < Signin handeler ={ Login}/> }
+          </Stack.Screen>
+
+          <Stack.Screen name = "Home">
+          { ( props ) => < Home handeler /> } 
           </Stack.Screen>
 
       </Stack.Navigator>
