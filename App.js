@@ -71,7 +71,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name= "Sign up">
-          { ( props ) => < Signup handeler ={ Register }/> }
+          { ( props ) => < Signup handler ={ Register }/> }
         </Stack.Screen>
 
 
@@ -79,8 +79,8 @@ export default function App() {
           { ( props ) => < Signin handeler ={ Login}/> }
           </Stack.Screen>
 
-          <Stack.Screen name = "Home">
-          { ( props ) => < Home handeler /> } 
+          <Stack.Screen name = "Home" options={{ headerShown: false}}>
+          { ( props ) => < Home /> } 
           </Stack.Screen>
 
       </Stack.Navigator>

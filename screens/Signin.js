@@ -46,8 +46,9 @@ export function Signin ( props ){
     // useEffect ( () => { console.log(email)}, [email] )
 
      const submitHandler = () => {   
-        props.handler(email, password) 
+        props.handeler(email, password) 
         .then( (user) => {
+            //sign in successful
             console.log(user)
         })
         .catch((error) => {
