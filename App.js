@@ -1,21 +1,23 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
-import {useState} from 'react'
+import { useState } from 'react'
+
 
 
 //contexts
-
 import { AuthContext } from './contexts/AuthContext'
+import { DbContext } from './contexts/DdContext'
 
 //firebase
 import { firebaseConfig } from './config/Config'
 import { initializeApp } from 'firebase/app'
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword
-       } from "firebase/auth"
+} from "firebase/auth"
+import { getFirestore } from 'firebase/firestore'
 
 //react navigation
 import { NavigationContainer } from '@react-navigation/native'
@@ -30,8 +32,9 @@ const Stack = createNativeStackNavigator()
 
 
 export default function App() {
-  const FBapp = initializeApp (firebaseConfig)
-  const FBauth = getAuth( FBapp )
+  const FBapp = initializeApp(firebaseConfig)
+  const FBauth = getAuth(FBapp)
+  const FBdb = getFirestore(FBapp)
 
   //state
   const [auth, setAuth] = useState()
@@ -39,52 +42,54 @@ export default function App() {
 
   //authencation observer
   onAuthStateChanged(FBauth, (user) => {
-    if (user){
+    if (user) {
       //user authenticated
       setAuth(user)
     }
-    else{
+    else {
       //user is not authenticated
-      setAuth( null )
+      setAuth(null)
     }
   })
 
-  const Register=(email, password) => {
-     return new Promise( ( resolve, reject ) => {
+  const Register = (email, password) => {
+    return new Promise((resolve, reject) => {
       createUserWithEmailAndPassword(FBauth, email, password)
-      .then( (response ) => resolve(response))
-      .catch( (err) => reject(err))
-     } )
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
+    })
   }
 
-  const Login =(email, password) =>{
-    return new Promise ( ( resolve,reject )=> { 
-      signInWithEmailAndPassword(FBauth, email,password)
-      .then((response) => resolve(response))
-      .catch((err) => reject(err))
+  const Login = (email, password) => {
+    return new Promise((resolve, reject) => {
+      signInWithEmailAndPassword(FBauth, email, password)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
 
     })
   }
 
   return (
-    <AuthContext.Provider value = { FBauth } >
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name= "Sign up">
-          { ( props ) => < Signup handler ={ Register }/> }
-        </Stack.Screen>
+    <AuthContext.Provider value={FBauth} >
+      <DbContext.Provider value={FBdb} >
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Sign up">
+              {(props) => < Signup handler={Register} />}
+            </Stack.Screen>
 
 
-        <Stack.Screen name= "Sign in">
-          { ( props ) => < Signin handeler ={ Login}/> }
-          </Stack.Screen>
+            <Stack.Screen name="Sign in">
+              {(props) => < Signin handeler={Login} />}
+            </Stack.Screen>
 
-          <Stack.Screen name = "Home" options={{ headerShown: false}}>
-          { ( props ) => < Home /> } 
-          </Stack.Screen>
+            <Stack.Screen name="Home" options={{ headerShown: false }}>
+              {(props) => < Home />}
+            </Stack.Screen>
 
-      </Stack.Navigator>
-    </NavigationContainer>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </DbContext.Provider>
     </AuthContext.Provider>
   );
 }
