@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet, Pressable} from 'react-native'
 import { useContext, useState, useEffect } from 'react'
+import { signOut } from 'firebase/auth'
+
 
 import { AuthContext } from '../contexts/AuthContext'
 
@@ -10,6 +12,7 @@ export function Profile (props){
     const [user,setUser] = useState()
 
     const Auth = useContext(AuthContext)
+    
 
     useEffect( ( ) => {
         if (Auth.currentUser){
@@ -29,7 +32,15 @@ export function Profile (props){
         return(
             <View style = { styles.container}>
                 <Text>Hello { user.email}</Text>
-                <Pressable style = {styles.button}>
+                <Pressable 
+                style = {styles.button} 
+                onPress={ () => {
+                    signOut(Auth) .then(
+                        //the user is sign out
+                    )
+
+                  }
+                }>
                     <Text style = {styles.button.text}>Sign Out</Text>
                 </Pressable>
             </View>

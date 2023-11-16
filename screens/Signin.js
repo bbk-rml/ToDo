@@ -49,7 +49,7 @@ export function Signin ( props ){
         props.handeler(email, password) 
         .then( (user) => {
             //sign in successful
-            console.log(user)
+           
         })
         .catch((error) => {
             console.log( error )

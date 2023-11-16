@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable, TextInput} from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import IonIcons from '@expo/vector-icons/Ionicons'
+import {useNavigation} from '@react-navigation/native'
 
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useState, useEffect } from 'react'
@@ -17,9 +18,14 @@ export function Home(props){
 
     const Auth = useContext(AuthContext)
 
+    const navigation = useNavigation()
+
     useEffect( () => {
         if(Auth.currentUser){
             setEmail(Auth.currentUser.email)
+        }
+        else{
+            navigation.reset({ index: 0, routes: [ {name:"Sign in"} ]})
         }
     })
 
