@@ -1,22 +1,48 @@
 import { View, Text, StyleSheet, Pressable} from 'react-native'
 import { useContext, useState, useEffect } from 'react'
 import { signOut } from 'firebase/auth'
+import { doc, getDoc} from "firebase/firestore"
+import { getStorage, ref, getDownloadURL } from 'firebase/storage'
+
+import { ProfileImage } from '../components/ProfileImage'
 
 
 import { AuthContext } from '../contexts/AuthContext'
+import { DbContext } from '../contexts/DdContext'
 
 
 
 export function Profile (props){
-
+    const defaultProfile = {
+        name:"", 
+        profileImg:""
+    }
     const [user,setUser] = useState()
+    const [profile, setProfile] = useState( defaultProfile )
 
     const Auth = useContext(AuthContext)
+    const db = useContext (DbContext)
     
+    const getUserData = async () => {
+        const docRef = doc( db, "things", `${user.uid}`)
+        const docSnap = await getDoc( docRef)
+        if( docSnap.exists){
+            setProfile ( docSnap.data())
+        }
+
+    }
+    useEffect ( () => {
+        if (user) {
+            getUserData ()
+        }
+    }, [user] )
 
     useEffect( ( ) => {
         if (Auth.currentUser){
             setUser ( Auth.currentUser )
+        }
+        else {
+            setUser( null )
         }
     }, [Auth])
 
@@ -28,9 +54,10 @@ export function Profile (props){
         )
     }
     else {
-        console.log(user)
         return(
             <View style = { styles.container}>
+                <Text> { profile.name }</Text>
+                <ProfileImage file={ Profile.profileImg } uid={user.uid} />
                 <Text>Hello { user.email}</Text>
                 <Pressable 
                 style = {styles.button} 

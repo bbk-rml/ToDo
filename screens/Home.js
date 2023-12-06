@@ -30,13 +30,13 @@ export function Home(props){
     })
 
     const DataOptins = {
-        tabBarLabel1:"Home",
+        tabBarLabel:"Home",
         tabBarIcon:({ color }) => <IonIcons name="home" color={color} size={20} />,
         title: "Home"
     }
 
     const ProfileOptins = {
-        tabBarLabel1: "Profile",
+        tabBarLabel: "Profile",
         tabBarIcon:({ color }) => <IonIcons name="person" color={color} size={20} />,
         title: email 
     }

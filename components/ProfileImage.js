@@ -1,5 +1,5 @@
 import { Text, Image, StyleSheet, View } from "react-native"
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react"
 import { StorageContext } from "../contexts/StorageContext"
 import { getStorage, ref, getDownloadURL } from "firebase/storage"
 
@@ -18,8 +18,8 @@ export function ProfileImage ( props ){
     })
     if (!image) {
     return (
-        <View>
-            <Text style={styles.noimage}>Loading...</Text>
+        <View style={styles.noimage}>
+            <Text >Loading...</Text>
         </View> 
     )
     }
@@ -30,14 +30,13 @@ export function ProfileImage ( props ){
         </View>  
         )
     }
-
 } 
-
 const styles = StyleSheet.create({
     tinyLogo:{
         width:100,
         height:100
-    },noimage:{
+    },
+    noimage:{
         height:100
     }
 })

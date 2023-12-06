@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, TextInput, FlatList} from 'react-native'
+import { View,  StyleSheet, Pressable, FlatList, Textw} from 'react-native'
 import { useContext, useState, useEffect } from 'react'
 import { DbContext } from '../contexts/DdContext'
 import { AuthContext } from '../contexts/AuthContext'
@@ -6,6 +6,7 @@ import { ListItem } from '../components/ListItem'
 
 
 import { collection,getDocs, query, onSnapshot } from "firebase/firestore"
+import { ListHeader } from '../components/ListHeader'
 
 export function Data (props){
     const db = useContext( DbContext ) 
@@ -73,7 +74,8 @@ export function Data (props){
             <FlatList 
             data = {data}
             renderItem={renderItem}
-            keyExtractor={ item => item.id }
+            keyExtractor={ (item) => item.id }
+            ListHeaderComponent = {<ListHeader text="List" />}
             />
         </View>
     )
