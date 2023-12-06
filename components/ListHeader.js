@@ -5,7 +5,8 @@ export function ListHeader (props){
     return(
         <View style ={styles.header}>
             <Text style={styles.text}> {props.text} </Text>
-            <Pressable style= {styles.button}>
+            <Pressable style= {styles.button} 
+            onPress ={ () => props.handler() }>
                 <Text style={styles.button.text}>Add</Text>
             </Pressable>
         </View>
