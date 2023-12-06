@@ -5,7 +5,16 @@ import { AuthContext } from '../contexts/AuthContext'
 import { ListItem } from '../components/ListItem'
 
 
-import { collection,getDocs, query, onSnapshot,addDoc } from "firebase/firestore"
+import { 
+    collection,
+    getDocs, 
+    query, 
+    onSnapshot,
+    addDoc, 
+    updateDoc, 
+    doc,
+    deleteDoc } 
+    from "firebase/firestore"
 import { ListHeader } from '../components/ListHeader'
 
 export function Data (props){
@@ -16,6 +25,7 @@ export function Data (props){
     const[user, setUser] = useState()
     const[ open, setOpen ] = useState(false)
     const[editing, setEditing] =useState(false)
+    const[docId, setDocId] = useState()
 
     const[title, setTitle] = useState('')
     const[note, setNote] = useState('')
@@ -61,15 +71,19 @@ export function Data (props){
         if (note.length < 1 || title.length <1) {return}
         const item ={name: title, note: note}
 
-
         const colRef = collection(db, `things/${user.uid}/list`)
         await addDoc( colRef, item)
     }
 
     const updateListItem = async () => {
-        
+        //create reference to the document inside "/things/UserID/list"
+        const docRef = doc(db,`things/${user.uid}/list`, docId )
+        await updateDoc(docRef, {name: title, note: note})
+
+        console.log("updating...." + docId)
         setTitle('')
         setNote('')
+        setDocId (null)
     }
 
 
@@ -95,6 +109,7 @@ export function Data (props){
         setEditing(true)
         setTitle (itemData.name)
         setNote(itemData.note)
+        setDocId(itemData.id)
         setOpen(true)
     }
 
@@ -143,13 +158,13 @@ export function Data (props){
                                 if (editing){
                                     updateListItem()
                                 }
-                                else { addListitem }
+                                else { addListitem()}
                                 setEditing(false)
                             }}
                                style={styles.button}
                                >
                                 <Text style ={styles.button.text}>
-                                 { (editing)? "update" : "add"}
+                                 { (editing)? "Update" : "add"}
                                 </Text>
                             </Pressable>
                             <Pressable 
