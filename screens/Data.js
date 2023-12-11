@@ -95,6 +95,15 @@ export function Data (props){
         setNote('')
         setEditing(false)
     }
+    const markItemDone = async ( item ) => {
+        const docRef = doc(db, `things/${user.uid}/list`, item.id)
+        await updateDoc(docRef, {name: item.name, note: item.note, status: true})
+    }
+
+    const deleteItem = async (id) => {
+        const docRef = doc(db, `things/${user.uid}/list`, id) 
+        await deleteDoc( docRef )
+    }
 
 
     useEffect ( () => {
@@ -125,7 +134,7 @@ export function Data (props){
 
     const renderItem =({item}) => {
         return(
-            <ListItem  item={item} editor = {openItem }/>
+            <ListItem  item={item} editor = {openItem } done={ markItemDone} delete ={deleteItem} />
         )
     }
 
