@@ -69,7 +69,7 @@ export function Data (props){
 
     const addListitem = async () => {
         if (note.length < 1 || title.length <1) {return}
-        const item ={name: title, note: note}
+        const item ={name: title, note: note, status: false}
 
         const colRef = collection(db, `things/${user.uid}/list`)
         await addDoc( colRef, item)
@@ -93,6 +93,7 @@ export function Data (props){
         setOpen(false)
         setTitle('')
         setNote('')
+        setEditing(false)
     }
 
 
@@ -139,6 +140,7 @@ export function Data (props){
             renderItem={renderItem}
             keyExtractor={ (item) => item.id }
             ListHeaderComponent = {<ListHeader text="List"  handler ={openModal}/>}
+            numColumns={1}
 
             />
             <Modal
