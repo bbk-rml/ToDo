@@ -110,9 +110,9 @@ const styles = StyleSheet.create({
     },
     form: {
         marginHorizontal: 10,
-        backgroundColor: '#fc3503',
+        backgroundColor: 'lightblue',
         marginTop: 30,
-        padding:5,
+        padding:20,
 
     },
     input: {

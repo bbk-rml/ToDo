@@ -15,7 +15,7 @@ import { DbContext } from '../contexts/DdContext'
 export function Profile (props){
     const defaultProfile = {
         name:"", 
-        profileImg:""
+        profileImg:"",
     }
     const [user,setUser] = useState()
     const [profile, setProfile] = useState( defaultProfile )
@@ -56,7 +56,7 @@ export function Profile (props){
     else {
         return(
             <View style = { styles.container}>
-                <Text> { profile.name }</Text>
+            
                 <ProfileImage file={ Profile.profileImg } uid={user.uid} />
                 <Text>Hello { user.email}</Text>
                 <Pressable 

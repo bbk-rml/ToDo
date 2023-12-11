@@ -86,6 +86,15 @@ export function Data (props){
         setDocId (null)
     }
 
+    const deleteListItem = async () => {
+        //create reference to the document inside "/things/UserID/list"
+        const docRef = doc ( db,`things/${user.uid}/list`, docId )
+        await deleteDoc (docRef)
+        setOpen(false)
+        setTitle('')
+        setNote('')
+    }
+
 
     useEffect ( () => {
         if( Auth.currentUser){
@@ -164,9 +173,17 @@ export function Data (props){
                                style={styles.button}
                                >
                                 <Text style ={styles.button.text}>
-                                 { (editing)? "Update" : "add"}
+                                 { (editing)? "Update" : "Add"}
                                 </Text>
                             </Pressable>
+                            { (editing) ? 
+                              (<Pressable 
+                              style={styles.button}
+                              onPress={ () => deleteListItem()}
+                              >
+                                <Text style={styles.button.text}>Delete</Text>
+                               </Pressable>) : null
+                            }
                             <Pressable 
                             style={styles.buttonClose}
                             onPress={ () => {
